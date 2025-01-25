@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV文件上传</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .upload-container {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        #message {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSV文件上传</h1>
+    <div class="upload-container">
+        <form id="uploadForm">
+            <input type="file" id="csvFile" accept=".csv" required>
+            <button type="submit" class="button">上传</button>
+        </form>
+    </div>
+    <div id="message"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('csvFile').files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.text();
+                const messageDiv = document.getElementById('message');
+                if (response.ok) {
+                    messageDiv.className = 'success';
+                    messageDiv.textContent = '文件上传成功！';
+                } else {
+                    messageDiv.className = 'error';
+                    messageDiv.textContent = '上传失败：' + result;
+                }
+            } catch (error) {
+                const messageDiv = document.getElementById('message');
+                messageDiv.className = 'error';
+                messageDiv.textContent = '上传失败：' + error.message;
+            }
+        });
+    </script>
+</body>
+</html> 
