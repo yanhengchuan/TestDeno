@@ -4,14 +4,14 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
-    "@std/csv": "jsr:@std/csv@^1.0.5",
+    "@std/csv": "jsr:@std/csv@^1.0.6",
     "mysql": "npm:mysql@^2.18.1"
   },
   "compilerOptions": {
     "strict": true
   },
   "deploy": {
-    "project": "3c250470-3aa5-444f-8856-33adb518bbea",
+    "project": "Hansen-Demo-Deno",
     "exclude": [
       "**/node_modules"
     ],
